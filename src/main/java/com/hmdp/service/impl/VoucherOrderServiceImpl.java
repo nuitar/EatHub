@@ -43,6 +43,8 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
     public Long seckillVoucher(Long voucherId) throws BaseException {
         SeckillVoucher seckillVoucher = seckillVoucherService.getById(voucherId);
         LocalDateTime now = LocalDateTime.now();
+        if(seckillVoucher == null)
+            throw new BaseException("优惠券不存在");
         if (seckillVoucher.getBeginTime().isAfter(now)) {
             throw new BaseException("秒杀未开始");
         }
