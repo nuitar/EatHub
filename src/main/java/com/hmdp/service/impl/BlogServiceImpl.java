@@ -73,7 +73,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
     public void likeBlog(Long id) {
         // 修改点赞数量
         Long userId = UserHolder.getUser().getId();
-        String key = "blog:liked";
+        String key = "blog:liked" + id;
         Double score = stringRedisTemplate.opsForZSet().score(key, userId.toString());
         if (score != null) {
             // 取消点赞
@@ -91,7 +91,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
 
     @Override
     public List<UserDTO> queryBlogLikes(Long id) {
-        Set<String> ids = stringRedisTemplate.opsForZSet().range(REDIS_LIKE_USER_SET_KEY,0,4);
+        Set<String> ids = stringRedisTemplate.opsForZSet().range(REDIS_LIKE_USER_SET_KEY + id,0,4);
         if (ids == null || ids.isEmpty()) {
             return Collections.emptyList();
         }
@@ -111,7 +111,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
         if(UserHolder.getUser() == null)
             return;
         Long userId = UserHolder.getUser().getId();
-        String key = "blog:liked" ;
+        String key = "blog:liked" + blog.getId();
         Double score = stringRedisTemplate.opsForZSet().score(key, userId.toString());
         blog.setIsLike(score != null);
     }
