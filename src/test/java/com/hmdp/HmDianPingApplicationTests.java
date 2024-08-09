@@ -2,6 +2,7 @@ package com.hmdp;
 
 import com.hmdp.utils.RedisWorker;
 import org.junit.jupiter.api.Test;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -18,6 +19,8 @@ public class HmDianPingApplicationTests {
 
     private ExecutorService es = Executors.newFixedThreadPool(500);
 
+    @Autowired
+    private RedissonClient redissonClient;
     @Test
     public void testRedisWorker() throws InterruptedException {
         CountDownLatch countDownLatch = new CountDownLatch(300);
@@ -39,5 +42,9 @@ public class HmDianPingApplicationTests {
         System.out.println("time  = " + (begin - end));
     }
 
+    @Test
+    public void testRedisson(){
+//        redissonClient.getLock("")
+    }
 
 }

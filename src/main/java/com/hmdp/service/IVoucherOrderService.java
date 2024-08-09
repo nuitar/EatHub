@@ -17,6 +17,6 @@ public interface IVoucherOrderService extends IService<VoucherOrder> {
 
     Long seckillVoucher(Long voucherId) throws BaseException;
 
-    Long doSeckillVoucher(SeckillVoucher seckillVoucher) throws BaseException;
+    void createVoucherOrder(VoucherOrder voucherOrder) throws BaseException;
 
 }
