@@ -84,7 +84,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public Result queryUserById(@PathVariable("id") Long userId){
+    public Result queryUserById(@PathVariable("id") Long userId) {
         // 查询详情
         User user = userService.getById(userId);
         if (user == null) {
@@ -93,5 +93,27 @@ public class UserController {
         UserDTO userDTO = BeanUtil.copyProperties(user, UserDTO.class);
         // 返回
         return Result.ok(userDTO);
+    }
+
+    /**
+     * 当前与用户当天签到
+     *
+     * @return
+     */
+    @PostMapping("/sign")
+    public Result sign() {
+        userService.sign();
+        return Result.ok();
+    }
+
+    /**
+     * 获取连续签到的天数
+     *
+     * @return
+     */
+    @GetMapping("/sign/count")
+    public Result signCount() {
+        int count = userService.signCount();
+        return Result.ok(count);
     }
 }
